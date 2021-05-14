@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dif.foodsearch.com.dao.UserMapper">
+	<!-- 게시판 글 작성 -->
+	<insert id="SignUp">
+	    INSERT INTO SignUp(   user_ID 
+	   					       , user_PW 
+	   					       , user_Email
+	   					       , user_NickName 	)
+	                  VALUES(    #{user_ID} 
+	                 		   , #{user_PW}
+	                 		   , #{user_Email}
+	                 		   , #{user_NickName})
+    </insert>
+    <select id="idCheck" resultType="String">
+      select user_ID from SignUp
+     where user_ID = #{user_ID}
+    </select>
+    
+    <update id="Modify">
+		UPDATE SignUp 
+		SET 
+		user_PW = #{user_PW},
+		user_Email = #{user_Email},
+		user_NickName = #{user_NickName},
+		WHERE user_ID = #{user_ID}
+	</update>
+	
+	<delete id="Withdrawl">
+	DELETE FROM SignUp
+	WHERE user_ID = #{user_ID}
+	  AND user_PW = #{user_PW} 
+     </delete>
+
+</mapper>    
