@@ -25,7 +25,7 @@
 
 	<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 
-        파이어베이스 실시간으로 웹페이지 연동하기 </br>
+      <br>  파이어베이스 실시간으로 웹페이지 연동하기 </br>
 
         Firebase + Realtime + Web 
 

@@ -13,7 +13,6 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <link rel="stylesheet" type="text/javascript"
 	href="/resources/css/LoginBT.css">
-</script>
 </head>
 <script>
 	 var csrfToken = $("meta[name='_csrf']").attr("content");
