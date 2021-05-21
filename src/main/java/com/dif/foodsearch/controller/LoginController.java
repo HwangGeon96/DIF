@@ -78,7 +78,6 @@ public class LoginController {
 		return "/login";
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/login/{snsService}/callback", method = { RequestMethod.POST, RequestMethod.GET })
 	public String snsLoginCallback(Model model, @PathVariable String snsService, @RequestParam String code,
 			HttpSession session, String idtoken) throws Exception {
@@ -102,7 +101,8 @@ public class LoginController {
 			System.out.println(nickname);
 
 			model.addAttribute("result", apiResult);
-			session.setAttribute("nickname", nickname);
+			session.setAttribute("name", nickname);
+			return "redirect:/";
 
 		} else if (StringUtils.equals("kakao", snsService)) {
 			logger.info("여기는 kakao callback");
@@ -132,11 +132,12 @@ public class LoginController {
 			session.setAttribute("kgender", kgender);
 			session.setAttribute("kbirthday", kbirthday);
 			session.setAttribute("kage", kage);
-
-			model.addAttribute("kname", kname);
-			session.setAttribute("kname", kname);
+			
+			
+			session.setAttribute("name", kname);
+			return "redirect:/";
 		}
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 	/* Google */
@@ -151,12 +152,12 @@ public class LoginController {
 		// 구글 토큰값을 이용해 유저정보 얻기
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
 				.setAudience(Collections
-						.singletonList("53828679659-h0m4th5u7oop341guu0nb7uinkm282t8.apps.googleusercontent.com"))
+				.singletonList("53828679659-h0m4th5u7oop341guu0nb7uinkm282t8.apps.googleusercontent.com"))
 				.build(); // 백엔드에 액세스하는 앱의 CLIENT_ID지정
 		verifier.getIssuer();
 		GoogleIdToken idToken = verifier.verify(idtoken);
 		JSONObject json = new JSONObject();
-
+	
 		// ID 토큰 확인
 		if (idToken != null) {
 			Payload payload = idToken.getPayload();
@@ -173,7 +174,7 @@ public class LoginController {
 			String locale = (String) payload.get("locale");
 			String familyName = (String) payload.get("family_name");
 			String givenName = (String) payload.get("given_name");
-
+			
 			/*
 			 * if (dupId((String) payload.get("email")).contains("false")) { //회원가입이 안 되어 있는
 			 * 경우 SocialJoinVO sjVO = new SocialJoinVO(); sjVO.setId((String)
@@ -187,7 +188,7 @@ public class LoginController {
 			 */
 			model.addAttribute("id", (String) payload.get("email"));
 			System.out.println(email);
-			session.setAttribute("id", name);
+			session.setAttribute("name", name);
 			json.put("login_result", "success");
 		} else { // 유효하지 않은 토큰
 			json.put("login_result", "fail");
@@ -198,7 +199,7 @@ public class LoginController {
 	}// googleLogin
 
 	@RequestMapping(value = "/login/facebook/callback", method = { RequestMethod.GET, RequestMethod.POST })
-	public String facebookSignInCallback(@RequestParam String code) throws Exception {
+	public String facebookSignInCallback(HttpSession session, @RequestParam String code) throws Exception {
 		System.out.println("여기는 callback");
 		try {
 			String redirectUri = oAuth2Parameters.getRedirectUri();
@@ -229,7 +230,7 @@ public class LoginController {
 				System.out.println("유저이메일 : " + userProfile.getEmail());
 				System.out.println("유저 id : " + userProfile.getId());
 				System.out.println("유저 name : " + userProfile.getName());
-
+				session.setAttribute("name", userProfile.getName());
 			} catch (MissingAuthorizationException e) {
 				e.printStackTrace();
 			}
@@ -239,14 +240,14 @@ public class LoginController {
 			e.printStackTrace();
 
 		}
-		return "redirect:/login";
-
+		return "home";
 	}
 
 	@RequestMapping(value = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
 	public String logout(HttpSession session) throws IOException {
 		System.out.println("여기는 logout");
 		session.invalidate();
+		
 		return "redirect:/";
 	}
 } // LoginController
