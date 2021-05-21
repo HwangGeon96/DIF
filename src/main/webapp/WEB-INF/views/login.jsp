@@ -10,11 +10,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
-<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/javascript"
-	href="/resources/css/LoginBT.css">
+<link rel="stylesheet" href="/resources/css/btn.css">
 
 	
 <script>
@@ -25,22 +23,13 @@
 	      jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 	  }
 	});  */
-	function renderButton() {
-        gapi.signin2.render('googleBtn', {
-          'scope': 'profile email',
-          'width': 170,
-          'height': 40,
-          'longtitle': true,
-          'theme': 'light'
-        });
-      }
     
       function onSignIn(googleUser) {
     	  // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
         var id_token = googleUser.getAuthResponse().id_token;
         
-        $("#googleBtn").click(function() {
+        $("#gSignInWrapper").click(function() {
 	        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
 	        console.log('Full Name: ' + profile.getName());
 	        console.log('Given Name: ' + profile.getGivenName());
@@ -66,8 +55,7 @@
 </script>
 </head>
 <body>	
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0&appId=222589642958336&autoLogAppEvents=1" nonce="gdVhVF3X"></script>
+
 		<br>
 		<h2 style="text-align: center;">로그인</h2>
 		<form action="login.userdo" method="post" name="frm">
@@ -89,31 +77,47 @@
 				</tr>
 			</table>	
 		</form>
-		<br>
 		<table style="width: 1em; margin: auto;">
 			<tr>
 				<td>
 					<a href="${n_url }">
-					<img width="50" src="/resources/images/naver.png" 
-					alt="Naver Login">
+						<div id="nSignInWrapper">
+						    <div id="customBtn2" class="customnPlusSignIn">
+						      <span class="icon"><img class="logo1" src="/resources/icons/btnG_아이콘사각.png"></span>
+						      <span class="buttonText">네이버 로그인</span>
+						    </div>
+						</div>
 					</a>
-				</td>
-				<td>
-					<a class="g-signin2" id="googleBtn" 
-					data-onsuccess="onSignIn"></a>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<a href="${k_url }"><img width="50" 
-					src="/resources/images/kakao.png" alt="Kakao Login"></a>
-				</td>
-				
-				<td>
-					<a href="${facebook_url}">dsf</a>
-					<div id="fbBtn">
-						<span id="fbicon"><img alt="" src=""></span>
+					<div class="g-signin2" data-onsuccess="onSignIn" hidden="true"></div>
+					<div id="gSignInWrapper">
+						  <div id="customBtn" class="customgPlusSignIn">
+						     <span class="icon"><img class="logo" src="/resources/icons/g-logo.png"> </span>
+						     <span class="buttonText">구글 로그인</span>
+						  </div>
 					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="${k_url }">
+						<img src="/resources/icons/kakao_login_medium_narrow.png">
+					</a>
+				</td>
+			</tr>
+			<tr>	
+				<td>
+					<a href="${facebook_url}">
+						<div id="fSignInWrapper">
+						    <div id="customBtn1" class="customfPlusSignIn">
+						      <span class="icon"><img class="logo" src="/resources/icons/f_logo.png"></span>
+						      <span class="buttonText">페이스북 로그인</span>
+						    </div>
+						</div>
+					</a>
 				</td>
 			</tr>
 		</table>
