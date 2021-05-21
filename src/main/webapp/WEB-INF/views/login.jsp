@@ -15,9 +15,15 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/javascript"
 	href="/resources/css/LoginBT.css">
+<<<<<<< HEAD
 	
 	<script>
 	/*  var csrfToken = $("meta[name='_csrf']").attr("content");
+=======
+</head>
+<script>
+	 var csrfToken = $("meta[name='_csrf']").attr("content");
+>>>>>>> 50b239c935d4d7c8ef9992d76625793d0e31a7c1
 	$.ajaxPrefilter(function(options, originalOptions, jqXHR){
 	  if (options['type'].toLowerCase() === "post") {
 	      jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
@@ -109,9 +115,7 @@
 				
 				<td>
 					<a href="${facebook_url}">dsf</a>
-					<div id="fbBtn" class="fb-login-button" data-width="" data-size="medium"
-					 data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="true">
-					</div>
+					<div id="fbBtn"></div>
 				</td>
 			</tr>
 		</table>
