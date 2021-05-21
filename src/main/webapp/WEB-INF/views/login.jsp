@@ -15,15 +15,11 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/javascript"
 	href="/resources/css/LoginBT.css">
-<<<<<<< HEAD
+
 	
-	<script>
-	/*  var csrfToken = $("meta[name='_csrf']").attr("content");
-=======
-</head>
 <script>
-	 var csrfToken = $("meta[name='_csrf']").attr("content");
->>>>>>> 50b239c935d4d7c8ef9992d76625793d0e31a7c1
+	/*  var csrfToken = $("meta[name='_csrf']").attr("content");
+
 	$.ajaxPrefilter(function(options, originalOptions, jqXHR){
 	  if (options['type'].toLowerCase() === "post") {
 	      jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
@@ -67,7 +63,7 @@
         });
       }
 
-    </script>
+</script>
 </head>
 <body>	
 <div id="fb-root"></div>
@@ -115,7 +111,9 @@
 				
 				<td>
 					<a href="${facebook_url}">dsf</a>
-					<div id="fbBtn"></div>
+					<div id="fbBtn">
+						<span id="fbicon"><img alt="" src=""></span>
+					</div>
 				</td>
 			</tr>
 		</table>
