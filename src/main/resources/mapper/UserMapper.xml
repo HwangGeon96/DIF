@@ -19,7 +19,7 @@
      where user_ID = #{user_ID}
     </select>
     
-    <update id="Modify">
+    <update id="mypage">
 		UPDATE SignUp 
 		SET 
 		user_PW = #{user_PW},
@@ -27,11 +27,5 @@
 		user_NickName = #{user_NickName},
 		WHERE user_ID = #{user_ID}
 	</update>
-	
-	<delete id="Withdrawl">
-	DELETE FROM SignUp
-	WHERE user_ID = #{user_ID}
-	  AND user_PW = #{user_PW} 
-     </delete>
 
 </mapper>    

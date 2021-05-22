@@ -89,6 +89,7 @@ public class UserController {
 		
 		return "redirect:/";
 	}
+	
 	@RequestMapping (value = "/mypage", method = RequestMethod.GET)
 	public String mypage() {
 		
