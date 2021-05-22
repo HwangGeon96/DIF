@@ -183,8 +183,7 @@
 	<c:if test="${not empty name }">
 	<span>${name } 님</span>
 	<a class="btn" href="/logout">로그아웃</a>
-	    <a class="btn" href="/user/modify">회원정보수정</a>
-	    <a class="btn" href="/user/withdrawal">회원탈퇴</a>
+	    <a class="btn" href="/user/mypage">마이페이지</a>
 	</c:if>	
 	</div>
 	<br>

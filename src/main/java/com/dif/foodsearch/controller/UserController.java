@@ -89,11 +89,11 @@ public class UserController {
 		
 		return "redirect:/";
 	}
-	@RequestMapping (value = "/Modify", method = RequestMethod.GET)
-	public String Modify() {
+	@RequestMapping (value = "/mypage", method = RequestMethod.GET)
+	public String mypage() {
 		
 		
-		return "/user/Modify";
+		return "/user/mypage";
 	}
 	
 	@RequestMapping (value = "/Modify", method = RequestMethod.POST)
