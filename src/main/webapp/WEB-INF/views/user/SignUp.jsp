@@ -25,58 +25,71 @@ var empJ = /\s/g;
 var idJ = /^[a-z0-9]{4,12}$/;
 // 비밀번호 정규식
 var pwJ = /^[A-Za-z0-9]{4,12}$/; 
-// 이름 정규식
+// 닉네임 정규식
 var nameJ = /^[A-Za-z0-9가-힣]{1,8}$/;
 // 이메일 검사 정규식
 var mailJ = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
+var idCheck = false;
+var pw = false;
+var pwCheck = false;
+var email = false;
+var nickname = false;
 
-$("#user_PW").blur(function() {
+$("#user_PW").keyup(function() {
 	
-	if(pwJ.test($("#user_PW").val())){
+	if(pwJ.test($("#user_PW").val())&&empJ.test($("#user_PW").val())==false){
 		$("#pwCheck").text('');
+		pw=true;
 	}else{
 		$("#pwCheck").text('4~12사이영어와숫자만가능합니다.');
 		$('#pwCheck').css('color', 'red');
+		pw=false;
 	}
 });
 
-$("#user_PWchk").blur(function() {
+$("#user_PWchk").keyup(function() {
 	var pwd1=$("#user_PW").val();
 	var pwd2=$("#user_PWchk").val();
 	
-	if(pwd1 !="" || pwd2 !=""){
+	if(pwd1==pwd2){
 		$("#pwChkChk").text('');
+		pwCheck=true;
 	}else{
 		$("#pwChkChk").text('같은 비밀번호를 입력해주십시오.');
 		$('#pwChkChk').css('color', 'red');
+		pwCheck=false;
 	}
 });
 
-$("#user_Email").blur(function() {
+$("#user_Email").keyup(function() {
 	
-	if(mailJ.test($("#user_Email").val())){
+	if(mailJ.test($("#user_Email").val())&&empJ.test($("#user_Email").val())==false){
 		$("#EmailChk").text('');
+		email=true;
 	}else{
 		$("#EmailChk").text('이메일형식을 확인해주십시오.');
 		$('#EmailChk').css('color', 'red');
+		email=false;
 	}
 });
 
-$("#user_NickName").blur(function() {
+$("#user_NickName").keyup(function() {
 	
-	if(nameJ.test($("#user_NickName").val())){
+	if(nameJ.test($("#user_NickName").val())&&empJ.test($("#user_NickName").val())==false){
 		$("#NickNameCheck").text('');
+		nickname=true;
 	}else{
-		$("#NickNameCheck").text('이름을 확인해주십시오.');
+		$("#NickNameCheck").text('닉네임은 1~8글자 영어,한글,숫자만가능합니다.');
 		$('#NickNameCheck').css('color', 'red');
+		nickname=false;
 	}
 });
 
-$("#user_ID").blur(function(){
+$("#user_ID").keyup(function(){
 	var id = document.getElementById('user_ID').value;
 	
-	if(idJ.test(id)){
+	if(idJ.test(id)&&empJ.test(id)==false){
 		$.ajax({
 			  url : "/user/idCheck",
 			  type : "post",
@@ -84,30 +97,48 @@ $("#user_ID").blur(function(){
 			  success : function(data) {
 				  	if(data=="yes"){
 				  		document.getElementById('idCheck').innerHTML = "";
-				  		document.getElementById('idCheck').style.color="green";
+				  		idCheck=true;
 					}else{
 						document.getElementById('idCheck').innerHTML = "중복된 ID가 존재합니다.";
 						document.getElementById('idCheck').style.color="red";
+						idCheck=false;
 					}
 			  }
 			 }); 
 	}else{
 		document.getElementById('idCheck').innerHTML = "4~12사이소문자영어와숫자만가능합니다.";
 		document.getElementById('idCheck').style.color="red";
+		idCheck=false;
 	}
 })
 
-function deleteForm(id){
-	document.getElementById(id).innerHTML = "";
-}
-});	
+$("#signFrm").submit(function(){
 
+	if(idCheck==false){
+		alert("아이디를 확인해주세요");
+		return false;
+	}else if(pw==false){
+		alert("비밀번호를 확인해주세요");
+		return false;
+	}else if(pwCheck==false){
+		alert("비밀번호 확인란을 확인해주세요");
+		return false;
+	}else if(email==false){
+		alert("이메일을 확인해주세요");
+		return false;
+	}else if(nickname==false){
+		alert("닉네임을 확인해주세요");
+		return false;
+	}
+});
+	 
+});	
 </script>
 </head>
 <body>
    <h1>회원가입</h1>
 	<hr>
-	<form id="signFrm" name="signFrm" action="SignUp" onsubmit="return formCheck();" method="POST">
+	<form id="signFrm" name="signFrm" action="SignUp" method="POST">
 				<div>
 					<label for="user_ID" style="display: inline;">아이디</label>
 					<input type="text" id="user_ID" name="user_ID" style="display: inline;" >
@@ -116,7 +147,7 @@ function deleteForm(id){
 				
 				<div style="display: inline;">
 				  <label for="user_PW" style="display: inline;">비밀번호  </label>
-					<input id="user_PW" type="password" style="display: inline;" class="form-control" required>
+					<input id="user_PW" name="user_PW" type="password" style="display: inline;" class="form-control" required>
 				  <div class="check_font" id="pwCheck" style="display: inline;"></div>
 			    </div>
 			    

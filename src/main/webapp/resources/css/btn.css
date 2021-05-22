@@ -1,0 +1,62 @@
+@charset "UTF-8";
+	#customBtn {
+      display: inline-block;
+      background: white;
+      color: #444;
+      width: 181px;
+      height: 43px;
+      border-radius: 5px;
+      border: thin solid grey;
+      white-space: nowrap;
+    }
+    #customBtn:hover {
+      cursor: pointer;
+    }
+    span.label {
+      font-family: serif;
+      font-weight: normal;
+    }
+    span.buttonText {
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 10px;
+      padding-right: auto;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    span.icon .logo {
+      display: inline-block;
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+      padding: 10px;
+    }
+    span.icon .logo1 {
+      display: inline-block;
+      vertical-align: middle;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+    }
+    #customBtn1 {
+      display: inline-block;
+      background: white;
+      color: #1877F2;
+      width: 181px;
+      height: 43px;
+      border-radius: 5px;
+      border: thin solid #1877F2;
+      white-space: nowrap;
+    }
+    #customBtn2 {
+      display: inline-block;
+      background: #03C75A;
+      color: white;
+      width: 181px;
+      height: 43px;
+      border-radius: 5px;
+      border: thin solid #03C75A;
+      white-space: nowrap;
+    }

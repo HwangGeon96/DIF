@@ -10,8 +10,8 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=652e898fa106f8aae6e2e77e0cf646c2&libraries=services"></script>
 	<script type="text/javascript">
 			 var page = 1;
-			 var lat = 1;
-			 var lon = 1;
+			 var lat = 1; // 위도
+			 var lon = 1; //경도
 			 var keyword = "";
 			 var geocoder = new kakao.maps.services.Geocoder();
 			 
@@ -33,7 +33,7 @@
 							}
 						});  
 			  }, function(error) {
-				  		/* document.getElementById("postInfo").value = "위치정보를 찾을 수 없습니다."; */
+				  		
 				  		$("#postInfo").text("위치정보를 찾을 수 없습니다.");
 				  		console.error(error);
 			  }, {
@@ -42,7 +42,8 @@
 					      timeout: Infinity
 			 })
 			 }	 
-			 });
+			 }
+		 );
 
 			 function postInfo() {
 			        new daum.Postcode({
@@ -91,8 +92,29 @@
 			  
 			  function pushEnter() { if (window.event.keyCode == 13) {searchKeyword();}}
 			  
-			  function searchKeyword(){
-				  keyword =  document.getElementById('keyword').value;
+			  function searchKeyword(CAT){
+				  var x = document.getElementsByClassName("catbtn");
+				  
+				  if(CAT!=null){  
+					  
+						keyword = CAT;
+						document.getElementById("keyword").value = "";
+						
+						for(var i=0; i<x.length; i++){
+							x[i].style.display="inline";
+						}
+						
+						document.getElementById(CAT).style.display="none";
+						
+				  }else{
+					  
+					    for(var i=0; i<x.length; i++){
+							x[i].style.display="inline";
+						}
+						
+					  	keyword =  document.getElementById('keyword').value;
+				  }
+				  
 				  page = 1;
 				  search();
 			  }
@@ -111,9 +133,15 @@
 								for(var i=0;i<data.documents.length;i++){
 									
 									var link = data.documents[i].place_url;
-									link.replace("http", "https");
 									
-									list += "<tr>"+"<td>"+"<a href="+link+" target='_blank'>"+data.documents[i].place_name+"</a>"+"</td>"+"<td>"+data.documents[i].distance+"m"+"</td>"+"<td>"+data.documents[i].phone+"</td>"+"</tr>";
+									list += "<tr><td><a href='"+link+"' target='_blank'>"+data.documents[i].place_name+
+									"</a></td><td>"+data.documents[i].distance+"m</td><td>"+data.documents[i].phone+
+									"</td><td><a href='https://map.kakao.com/link/map/"+data.documents[i].id+
+									"' target='_blank'><img src='/resources/icons/location.png'></a>  "+
+									"<a href='https://map.kakao.com/link/to/"+data.documents[i].id+
+									"' target='_blank'><img src='/resources/icons/navigator.png'></a></td></tr>";
+									
+									
 								}
 								document.getElementById('tb').innerHTML = list;
 								
@@ -130,26 +158,31 @@
 								}
 							}
 						})  
-			};   
-			 
-		
+			};
 	</script>
-	
+	<style type="text/css">
+		.catbtn {
+			width: 85px;
+			height: 40px;		
+		}
+	</style>
 </head>
 <body>
-	<!-- <df-messenger
-	  chat-title="ChatBot"
-	  agent-id="c4800ae0-fe04-4429-a29f-1242678f6c8f"
-	  language-code="ko"
-	></df-messenger> -->
-	
+	<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="ChatBot"
+  agent-id="db55c310-a166-448e-aa69-cdd9f8aefc93"
+  language-code="ko"
+></df-messenger>
 	<div style="display: block; text-align: right;">
-	<c:if test="${empty user_ID }">
+	<c:if test="${empty name }">
 		<a class="btn" href="/user/SignUp">회원가입</a>
 		<a class="btn" href="/login">로그인</a>
 		</c:if>
-	<c:if test="${not empty user_ID }">
-	<a class="btn" href="/member/logout">로그아웃</a>
+	<c:if test="${not empty name }">
+	<span>${name } 님</span>
+	<a class="btn" href="/logout">로그아웃</a>
 	    <a class="btn" href="/user/modify">회원정보수정</a>
 	    <a class="btn" href="/user/withdrawal">회원탈퇴</a>
 	</c:if>	
@@ -160,12 +193,12 @@
 		<input id="postInfo" type="text" style="width: 200px; border:none; background: white; text-align: center; color: black;" disabled="disabled">
 	</div>
 	<br>
+	<table id="tb" style="margin: auto;"></table>
+	<br>
+	<div style="text-align: center;"><input id="한식" class="catbtn" type="button" value="한식" onclick="searchKeyword(this.value);"> <input id="중식" class="catbtn" type="button" value="중식" onclick="searchKeyword(this.value);"> <input id="일식" class="catbtn" type="button" value="일식" onclick="searchKeyword(this.value);"> <input id="패스트푸드" class="catbtn" type="button" value="패스트푸드" onclick="searchKeyword(this.value);"></div>
+	<br>
+	<div style="text-align: center;"><input id="피자" class="catbtn" type="button" value="피자" onclick="searchKeyword(this.value);"> <input id="치킨" class="catbtn" type="button" value="치킨" onclick="searchKeyword(this.value);"> <input id="분식" class="catbtn" type="button" value="분식" onclick="searchKeyword(this.value);"> <input id="족발" class="catbtn" type="button" value="족발" onclick="searchKeyword(this.value);"></div>
 	
-	<table id="tb" style="margin: auto;">
-		<tr>
-			<td height="250px">검색 내용이 없습니다.</td>
-		</tr>
-	</table>
 	<br>
 	<div style="text-align: center;">
 		<input id="downBtn" type="button" disabled="disabled" value="◁" onclick="setPage(2);">

@@ -34,6 +34,7 @@ public class UserController {
 	
 	@RequestMapping (value = "/SignUp", method = RequestMethod.POST)
 	public String SignUp(String user_ID, String user_PW, String user_Email, String user_NickName) {
+		logger.info("비밀번호"+user_PW);
 		String pw = pwdEncoder.encode(user_PW);
 		boolean result = service.SignUp(user_ID, pw, user_Email, user_NickName);
 	    if (result) {
