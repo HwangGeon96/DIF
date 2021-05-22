@@ -40,8 +40,10 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.util.Utils;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
+import com.dif.foodsearch.com.service.SnsService;
 import com.dif.foodsearch.utill.SNSLogin;
 import com.dif.foodsearch.utill.SnsValue;
+import com.dif.foodsearch.vo.UserVO;
 
 @Controller
 public class LoginController {
@@ -52,7 +54,10 @@ public class LoginController {
 
 	@Inject
 	private SnsValue gSns;
-
+	
+	@Autowired
+	private SnsService service;
+	
 	@Autowired
 	private FacebookConnectionFactory connectionFactory;
 	@Autowired
@@ -98,10 +103,19 @@ public class LoginController {
 			JSONObject response_obj = (JSONObject) jsonObj.get("response");
 
 			String nickname = (String) response_obj.get("nickname");
+			String email = (String) response_obj.get("email");
 			System.out.println(nickname);
-
-			model.addAttribute("result", apiResult);
-			session.setAttribute("name", nickname);
+			
+			UserVO vo = service.socialLogin(nickname, email, "na");
+			
+			if(vo != null) {
+				session.setAttribute("name", vo.getUser_NickName());
+				session.setAttribute("CAT", vo.getUser_PW());
+			}else {
+				model.addAttribute("result", 1);
+				return "login";
+			}
+			
 			return "redirect:/";
 
 		} else if (StringUtils.equals("kakao", snsService)) {
@@ -126,18 +140,18 @@ public class LoginController {
 			kgender = kakao_account.path("gender").asText();
 			kbirthday = kakao_account.path("birthday").asText();
 			kage = kakao_account.path("age_range").asText();
-			session.setAttribute("kemail", kemail);
-			session.setAttribute("kname", kname);
-			session.setAttribute("kimage", kimage);
-			session.setAttribute("kgender", kgender);
-			session.setAttribute("kbirthday", kbirthday);
-			session.setAttribute("kage", kage);
 			
+			UserVO vo = service.socialLogin(kname, kemail, "ka");
 			
-			session.setAttribute("name", kname);
-			return "redirect:/";
+			if(vo != null) {
+				session.setAttribute("name", vo.getUser_NickName());
+				session.setAttribute("CAT", vo.getUser_PW());
+			}else {
+				model.addAttribute("result", 1);
+				return "login";
+			}
 		}
-		return "redirect:/";
+			return "redirect:/";
 	}
 
 	/* Google */
@@ -174,32 +188,27 @@ public class LoginController {
 			String locale = (String) payload.get("locale");
 			String familyName = (String) payload.get("family_name");
 			String givenName = (String) payload.get("given_name");
-			
-			/*
-			 * if (dupId((String) payload.get("email")).contains("false")) { //회원가입이 안 되어 있는
-			 * 경우 SocialJoinVO sjVO = new SocialJoinVO(); sjVO.setId((String)
-			 * payload.get("email")); sjVO.setAuth_email((String) payload.get("email"));
-			 * sjVO.setNickname((String) payload.get("given_name"));
-			 * sjVO.setBlog_name((String) payload.get("given_name"));
-			 * sjVO.setProfile_img((String) payload.get("picture"));
-			 * sjVO.setPlatform("google"); sjVO.setAccess_token(idtoken);
-			 * 
-			 * new MemberService().googleJoin(sjVO); }//end if
-			 */
-			model.addAttribute("id", (String) payload.get("email"));
-			System.out.println(email);
-			session.setAttribute("name", name);
+
 			json.put("login_result", "success");
+			
+			UserVO vo = service.socialLogin(name, email, "go");
+			if(vo != null) {
+				session.setAttribute("name", vo.getUser_NickName());
+				session.setAttribute("CAT", vo.getUser_PW());
+			}else {
+				model.addAttribute("result", 1);
+				return "login";
+			}
 		} else { // 유효하지 않은 토큰
 			json.put("login_result", "fail");
 		} // end else
-
+		
 		return json.toString();
 
 	}// googleLogin
 
 	@RequestMapping(value = "/login/facebook/callback", method = { RequestMethod.GET, RequestMethod.POST })
-	public String facebookSignInCallback(HttpSession session, @RequestParam String code) throws Exception {
+	public String facebookSignInCallback(HttpSession session,Model model, @RequestParam String code) throws Exception {
 		System.out.println("여기는 callback");
 		try {
 			String redirectUri = oAuth2Parameters.getRedirectUri();
@@ -231,6 +240,16 @@ public class LoginController {
 				System.out.println("유저 id : " + userProfile.getId());
 				System.out.println("유저 name : " + userProfile.getName());
 				session.setAttribute("name", userProfile.getName());
+				
+				UserVO vo = service.socialLogin(userProfile.getName(), userProfile.getEmail(), "fa");
+				if(vo != null) {
+					session.setAttribute("name", vo.getUser_NickName());
+					session.setAttribute("CAT", vo.getUser_PW());
+				}else {
+					model.addAttribute("result", 1);
+					return "login";
+				}
+				
 			} catch (MissingAuthorizationException e) {
 				e.printStackTrace();
 			}
@@ -240,6 +259,9 @@ public class LoginController {
 			e.printStackTrace();
 
 		}
+		
+		
+		
 		return "home";
 	}
 
@@ -250,4 +272,22 @@ public class LoginController {
 		
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/localSignIn", method = RequestMethod.POST)
+	public String localSignIn(HttpSession session, String id, String pwd, Model model){
+		System.out.println("local login");
+		UserVO vo = service.localSignIn(id, pwd);
+		//로그인 실패시 id는 n리턴
+		if(vo != null && vo.getUser_ID().equals("n")==false) {
+			session.setAttribute("name", vo.getUser_NickName());
+			session.setAttribute("userid", vo.getUser_ID());
+			return "redirect:/";
+		}else {
+			model.addAttribute("result", 1);
+			return "login";
+		}
+		
+		
+	}
+	
 } // LoginController

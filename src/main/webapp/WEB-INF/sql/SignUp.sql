@@ -1,7 +1,7 @@
 create table SignUp(
-user_ID VARCHAR2(30) primary key ,
-user_PW VARCHAR2(100) not null ,
-user_Email VARCHAR2(50) not null ,
+user_ID VARCHAR2(36) primary key ,
+user_PW VARCHAR2(36) not null ,
+user_Email VARCHAR2(100) not null ,
 user_NickName VARCHAR2(50) not null
 );
 

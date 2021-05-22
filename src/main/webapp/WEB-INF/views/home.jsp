@@ -178,7 +178,7 @@
 	<div style="display: block; text-align: right;">
 	<c:if test="${empty name }">
 		<a class="btn" href="/user/SignUp">회원가입</a>
-		<a class="btn" href="/login">로그인</a>
+		<a class="btn" href="/login" onclick="window.open(this.href,'로그인','width=450, height=450'); return false;">로그인</a>
 		</c:if>
 	<c:if test="${not empty name }">
 	<span>${name } 님</span>
@@ -210,9 +210,6 @@
 		<input type="button" value="검색" onclick="searchKeyword();">
 	</div>
 	
-	<!-- <input type="button" value="한식" onclick="setMenu('한식');">
-	<input type="button" value="중식" onclick="setMenu('중식');">
-	<input type="button" value="일식" onclick="setMenu('일식');"> -->
 
 </body>
 </html>

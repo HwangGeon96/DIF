@@ -7,7 +7,7 @@
 		<typeAlias type="com.dif.foodsearch.vo.UserVO" alias="user"/>
 	</typeAliases>
 	<mappers>
-		<mapper resource="mapper/Mapper.xml" />
 		<mapper resource="mapper/UserMapper.xml" />
+		<mapper resource="mapper/SUserMapper.xml" />
 	</mappers>
 </configuration>
