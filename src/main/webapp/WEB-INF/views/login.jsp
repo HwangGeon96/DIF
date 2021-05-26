@@ -12,8 +12,8 @@
 <script src="https://apis.google.com/js/api:client.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/resources/css/btn.css">
-
-	
+<link rel="icon" type="image/png" sizes="32x32" href="/resources/icons/favicon-32x32.png">
+<link rel="stylesheet" href="/resources/css/logIn.css">
 <script>
 	
 	var googleUser = {};
@@ -52,9 +52,11 @@
 	          alert(JSON.stringify(error, undefined, 2));
 	        });
 	  }
+
 </script>
 </head>
 <body>	
+
 		<c:if test="${result eq 1}">
 			<script type="text/javascript">
 				alert("아이디 혹은 비밀번호를 다시 확인해주세요.");
@@ -62,27 +64,33 @@
 			</script>
 		</c:if>
 		<br>
-		<h2 style="text-align: center;">로그인</h2>
+		<h1 style="text-align: center;">Login</h1>
 		<form action="/localSignIn" method="post" name="frm">
-			<table style="width: 1em; margin: auto;">
+			<table>
 				<tr>
 					<td>
-						<input type="text" name="id" id="id" 
-						class="w3-input w3-border" placeholder="아이디">
-					</td>
-					<td rowspan="2">
-						<input type="submit" style="height: 48px;" value="로그인">
+						<div class="idForm">
+							<input type="text" name="id" id="id" 
+							class="id" placeholder="아이디">
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="password" id="pwd" name="pwd" 
-						class="w3-input w3-border" placeholder="비밀번호"> 
+						<div class="passForm">
+							<input type="password" id="pwd" name="pwd" 
+							class="pw" placeholder="비밀번호"> 
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" class="btn" value="로그인">
 					</td>
 				</tr>
 			</table>	
 		</form>
-		<table style="width: 1em; margin: auto;">
+		<table>
 			<tr>
 				<td>
 					<a href="${n_url }">
@@ -108,14 +116,14 @@
 			</tr>
 			<tr>
 				<td>
-					<a href="${k_url }">
+					<a href="${k_url }" >
 						<img src="/resources/icons/kakao_login_medium_narrow.png">
 					</a>
 				</td>
 			</tr>
 			<tr>	
 				<td>
-					<a href="${facebook_url}">
+					<a href="${facebook_url}" >
 						<div id="fSignInWrapper">
 						    <div id="customBtn1" class="customfPlusSignIn">
 						      <span class="icon"><img class="logo" src="/resources/icons/f_logo.png"></span>

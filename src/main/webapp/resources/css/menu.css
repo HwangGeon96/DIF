@@ -1,0 +1,41 @@
+@charset "UTF-8";
+ #topMenu {            
+	height: 50px; 
+	width: 100%; 
+	background: #2d2d2d;
+	list-style-type: none;
+	text-align: center;
+	vertical-align: middle;
+}
+#topMenu ul .left {                       
+	list-style: none;           
+	color: white;               
+	background-color: #2d2d2d;              
+	line-height: 50px;          
+	vertical-align: middle;     
+	float: left; 
+}
+
+#topMenu .menuLink {                             
+	text-decoration:none;                     
+	color: white;                              
+	display: block;                           
+	width: 150px;                            
+	font-size: 12px;                           
+	font-weight: bold;                        
+	font-family: "Trebuchet MS", Dotum, Arial; 
+}
+#topMenu .menuLink:hover {            
+	color: red;                   
+	background-color: #4d4d4d;    
+}
+.right #postInfo {width: 300px; float: right;}
+.right #le {width: 35px; font-size: 16pt;}
+#topMenu ul .right {                       
+	list-style: none;           
+	color: white;               
+	background-color: #2d2d2d;              
+	line-height: 50px;          
+	vertical-align: middle;     
+ 	float: right;
+}

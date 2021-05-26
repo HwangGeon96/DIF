@@ -109,8 +109,7 @@ public class LoginController {
 			UserVO vo = service.socialLogin(nickname, email, "na");
 			
 			if(vo != null) {
-				session.setAttribute("name", vo.getUser_NickName());
-				session.setAttribute("CAT", vo.getUser_PW());
+				session.setAttribute("user", vo);
 			}else {
 				model.addAttribute("result", 1);
 				return "login";
@@ -144,8 +143,7 @@ public class LoginController {
 			UserVO vo = service.socialLogin(kname, kemail, "ka");
 			
 			if(vo != null) {
-				session.setAttribute("name", vo.getUser_NickName());
-				session.setAttribute("CAT", vo.getUser_PW());
+				session.setAttribute("user", vo);
 			}else {
 				model.addAttribute("result", 1);
 				return "login";
@@ -193,8 +191,7 @@ public class LoginController {
 			
 			UserVO vo = service.socialLogin(name, email, "go");
 			if(vo != null) {
-				session.setAttribute("name", vo.getUser_NickName());
-				session.setAttribute("CAT", vo.getUser_PW());
+				session.setAttribute("user", vo);
 			}else {
 				model.addAttribute("result", 1);
 				return "login";
@@ -243,8 +240,7 @@ public class LoginController {
 				
 				UserVO vo = service.socialLogin(userProfile.getName(), userProfile.getEmail(), "fa");
 				if(vo != null) {
-					session.setAttribute("name", vo.getUser_NickName());
-					session.setAttribute("CAT", vo.getUser_PW());
+					session.setAttribute("user", vo);
 				}else {
 					model.addAttribute("result", 1);
 					return "login";
@@ -279,8 +275,11 @@ public class LoginController {
 		UserVO vo = service.localSignIn(id, pwd);
 		//로그인 실패시 id는 n리턴
 		if(vo != null && vo.getUser_ID().equals("n")==false) {
-			session.setAttribute("name", vo.getUser_NickName());
-			session.setAttribute("userid", vo.getUser_ID());
+			/*
+			 * session.setAttribute("name", vo.getUser_NickName());
+			 * session.setAttribute("userid", vo.getUser_ID());
+			 */
+			session.setAttribute("user", vo);
 			return "redirect:/";
 		}else {
 			model.addAttribute("result", 1);

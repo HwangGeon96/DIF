@@ -18,20 +18,85 @@
       select user_ID from SignUp
      where user_ID = #{user_ID}
     </select>
-    
-    <update id="Modify">
-		UPDATE SignUp 
+	
+	<update id="updateSnsInfo" parameterType="user">
+		UPDATE 
+			SignUp 
 		SET 
-		user_PW = #{user_PW},
-		user_Email = #{user_Email},
-		user_NickName = #{user_NickName},
-		WHERE user_ID = #{user_ID}
+			user_NickName = #{user_NickName}
+		WHERE 
+			user_ID = #{user_ID}
 	</update>
 	
-	<delete id="Withdrawl">
-	DELETE FROM SignUp
-	WHERE user_ID = #{user_ID}
-	  AND user_PW = #{user_PW} 
-     </delete>
-
+	<update id="updateInfo" parameterType="user">
+		UPDATE 
+			SignUp 
+		SET 
+			user_Email = #{user_Email},
+			user_NickName = #{user_NickName}
+		WHERE 
+			user_ID = #{user_ID}
+	</update>
+	
+	<update id="updateInfoPw" parameterType="user">
+		UPDATE 
+			SignUp 
+		SET 
+			user_PW = #{user_PW},
+			user_Email = #{user_Email},
+			user_NickName = #{user_NickName}
+		WHERE 
+			user_ID = #{user_ID}
+	</update>
+	
+	<select id="getInfo" parameterType="String" resultType="user">
+		SELECT
+			 * 
+		from 
+			signup 
+		where 
+			user_id = #{user_ID}
+	</select>
+	
+	<delete id="deleteUser" parameterType="String">
+		DELETE FROM 
+				SignUp
+		WHERE 
+			user_ID = #{user_ID}
+	</delete>
+	
+	<insert id="favorite" parameterType="favorite">
+		    INSERT INTO 
+		    		favorite(   name, 
+	   					      link, 
+	   					      id		)
+	                VALUES(   #{name}, 
+	                 		  #{link},
+	                 		  #{id}		)
+	</insert>
+	
+	<delete id="delfavorite" parameterType="favorite">
+		DELETE FROM 
+				favorite
+		WHERE 
+			link = #{link} and id = #{id}
+	</delete>
+	
+	<select id="getfavorite" parameterType="String" resultType="favorite">
+		SELECT
+			 * 
+		from 
+			favorite
+		where 
+			id = #{id}
+	</select>
+	
+	<select id="check" parameterType="favorite" resultType="favorite">
+		SELECT
+			 * 
+		from 
+			favorite
+		where 
+			link = #{link} and id = #{id}
+	</select>
 </mapper>    

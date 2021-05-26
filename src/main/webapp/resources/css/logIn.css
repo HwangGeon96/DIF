@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+*{
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+  font-family:sans-serif;
+}
+
+table {
+	width: 1em;
+	margin: auto;
+}
+.idForm{
+  border-bottom: 2px solid #adadad;
+  margin: 10px;
+  padding: 10px 10px;
+  width: 183px;
+}
+
+.passForm{
+  border-bottom: 2px solid #adadad;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+.id {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.btn {
+  position:relative;
+  left:50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  width:183px;
+  height:45px;
+  background: linear-gradient(125deg,#819FF7,#6c5ce7);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+}
+
+.btn:hover {
+  background-position: right;
+}
+
+.bottomText {
+  text-align: center;
+}

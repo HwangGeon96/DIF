@@ -1,11 +1,15 @@
 package com.dif.foodsearch.com.service;
 
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dif.foodsearch.com.dao.UserDAO;
 import com.dif.foodsearch.vo.UserVO;
+import com.dif.foodsearch.vo.favoriteVO;
 
 
 @Service
@@ -13,6 +17,9 @@ public class UserService {
 	
 	@Autowired
 	UserDAO dao;
+	
+	@Autowired
+	BCryptPasswordEncoder pwdEncoder;
 
 	public boolean SignUp(String user_ID, String user_PW, String user_Email, String user_NickName) {
 		UserVO newUser = new UserVO();
@@ -29,29 +36,46 @@ public class UserService {
 			return false;
 		}
 	}
-	public String login(String user_ID, String user_PW) {
-		UserVO loginUser = new UserVO();
-		loginUser.setUser_ID(user_ID);
-		loginUser.setUser_PW(user_PW);
-		
-		
-		String result = dao.login(loginUser);
-		
-		return result;
-	}
+	
 	public String idCheck(String user_ID) {
 		// TODO Auto-generated method stub
 		return dao.idCheck(user_ID);
 	}
-	public void Modify(UserVO vo) {
+
+	public UserVO updateInfo(UserVO result) {
+		String pw = result.getUser_PW();
 		
-		dao.Modify(vo);
+		if(pw.equals("소셜로그인이용자입니다")==false&&pw.length()>3) {
+			result.setUser_PW(pwdEncoder.encode(pw));
+		}
 		
+		return dao.updateInfo(result);
 	}
-	
-	public void Withdrawl(UserVO vo) {
-		dao.Withdrawl(vo);
+
+	public boolean deleteUser(String user_ID) {
+		int result = dao.deleteUser(user_ID);
+		
+		if(result>0) {
+			return true;
+		}
+		
+		return false;
 	}
-	
+
+	public favoriteVO favorite(String name, String link, String id) {
+			favoriteVO vo = new favoriteVO();
+			vo.setName(name);
+			vo.setLink(link);
+			vo.setId(id);
+			
+			favoriteVO result = dao.favorite(vo);
+			
+		return result;
+	}
+
+	public ArrayList<favoriteVO> getfavorite(String id) {
+		
+		return dao.getfavorite(id);
+	}
 	
 }

@@ -19,19 +19,6 @@ public class SnsDao {
 	@Autowired
 	private SqlSession session;
 	
-	public int SjoinForm(UserVO sns) {
-		int result = 0;
-		
-		try {
-			SUserMapper mapper = session.getMapper(SUserMapper.class);
-			result = mapper.SjoinForm(sns);
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}
-		return result;
-	}
-
 	public UserVO localSignIn(String id, String pwd) {
 			UserVO result = null;
 		try {
@@ -63,7 +50,7 @@ public class SnsDao {
 			result = mapper.socialLogin(re);
 			
 			if(result==null) {
-				int naverSignIn = mapper.socialSignIn(re);
+				mapper.socialSignIn(re);
 				result = mapper.socialLogin(re);
 			}
 			

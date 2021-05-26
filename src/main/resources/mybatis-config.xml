@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.dif.foodsearch.vo.UserVO" alias="user"/>
+		<typeAlias type="com.dif.foodsearch.vo.favoriteVO" alias="favorite"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/UserMapper.xml" />

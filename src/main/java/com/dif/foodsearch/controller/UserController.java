@@ -1,6 +1,8 @@
 package com.dif.foodsearch.controller;
 
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dif.foodsearch.com.service.UserService;
 import com.dif.foodsearch.vo.UserVO;
+import com.dif.foodsearch.vo.favoriteVO;
 
 
 @Controller
@@ -60,76 +64,74 @@ public class UserController {
 		
 		return result;
 	}
-
 	
-	@RequestMapping (value = "/login", method = RequestMethod.GET)
-	public String login() {
-		return "/user/login";
+	@RequestMapping (value = "/mypage", method = RequestMethod.GET)
+	public String mypage() {
+		return "/user/mypage";
 	}
 	
-	@RequestMapping (value = "/login", method = RequestMethod.POST)
-	public String login(String user_ID, String user_PW, HttpSession session) {
-		String loginId = service.login(user_ID, user_PW);
+	@RequestMapping (value = "/mypage", method = RequestMethod.POST)
+	public String mypage(String user_ID, String user_PW, String user_Email, String user_NickName, HttpSession session, RedirectAttributes redirect) {
+		UserVO result = new UserVO();
 		
-		if(loginId == null) {
-			System.out.println("로그인 실패");
-			return "redirect:/user/login";
-		}else {
-			System.out.println("로그인 성공");
-			session.setAttribute("user_ID", loginId);
+		result.setUser_ID(user_ID);
+		result.setUser_PW(user_PW);
+		result.setUser_Email(user_Email);
+		result.setUser_NickName(user_NickName);
+		logger.info("업데이트 메소드"+user_ID,user_PW,user_Email,user_NickName);
+		
+		result = service.updateInfo(result);
+		
+		if(result.getUser_PW().equals("nn")||result.getUser_PW().equals("n")) {
+			session.setAttribute("user", result);
+			redirect.addFlashAttribute("result", 2); 
 			
-			return "redirect:/";
+			return "redirect:/user/mypage";
 		}
 		
-	}
-	
-	@RequestMapping (value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-		session.removeAttribute("user_ID");
-		
-		return "redirect:/";
-	}
-	@RequestMapping (value = "/Modify", method = RequestMethod.GET)
-	public String Modify() {
+		session.setAttribute("user", result);
+		redirect.addFlashAttribute("result", 1); 
 		
 		
-		return "/user/Modify";
-	}
-	
-	@RequestMapping (value = "/Modify", method = RequestMethod.POST)
-	public String Modify(UserVO vo, HttpSession session) {
-
-		service.Modify(vo);
-		
-		session.invalidate();
 		
 		return "redirect:/";
 	}
 	
-	@RequestMapping (value = "/Withdrawl", method = RequestMethod.GET)
-	public String Withdrawl() {
+	@RequestMapping (value = "/deleteUser", method = RequestMethod.GET)
+	public String deleteUser(HttpSession session,RedirectAttributes redirect) {
+		UserVO id = (UserVO)session.getAttribute("user");
 		
+		boolean result = service.deleteUser(id.getUser_ID());
 		
-		return "/user/Withdrawl";
+		if(result) {
+			session.invalidate();
+			return "redirect:/";
+		}
+		redirect.addFlashAttribute("result", 3);  
+
+		return "redirect:/user/mypage";
 	}
 	
-	@RequestMapping (value = "/Withdrawl", method = RequestMethod.POST)
-	public String Withdrawl(UserVO vo, HttpSession session, RedirectAttributes rttr) {
-		// 세션에 있는 member를 가져와 member변수에 넣어줍니다.
-		        UserVO user = (UserVO) session.getAttribute("user");
-				// 세션에있는 비밀번호
-				String sessionPass = user.getUser_PW();
-				// vo로 들어오는 비밀번호
-				String voPass = vo.getUser_PW();
-				
-				if(!(sessionPass.equals(voPass))) {
-					rttr.addFlashAttribute("msg", false);
-					return "redirect:/user/Withdrawl";
-				}
-				service.Withdrawl(vo);
-				session.invalidate();
-				return "redirect:/";
+	@ResponseBody
+	@RequestMapping (value = "/favorite", method = RequestMethod.POST)
+	public favoriteVO favorite(String name, String link, String id) {
+		
+		favoriteVO result = service.favorite(name, link, id); 
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping (value = "/getfavorite", method = RequestMethod.POST)
+	public ArrayList<favoriteVO> getfavorite(String id) {
+		
+		ArrayList<favoriteVO> result = service.getfavorite(id);
+
+		return result;
 	}
 
-
+	@RequestMapping (value = "/favor", method = RequestMethod.GET)
+	public String favor() {
+		return "/user/favor";
+	}
 }
