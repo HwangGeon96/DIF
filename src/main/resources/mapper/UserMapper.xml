@@ -37,8 +37,8 @@
 		WHERE 
 			user_ID = #{user_ID}
 	</update>
-	
-	<update id="updateInfoPw" parameterType="user">
+    
+    <update id="updateInfoPw">
 		UPDATE 
 			SignUp 
 		SET 
@@ -48,6 +48,7 @@
 		WHERE 
 			user_ID = #{user_ID}
 	</update>
+
 	
 	<select id="getInfo" parameterType="String" resultType="user">
 		SELECT
@@ -99,4 +100,5 @@
 		where 
 			link = #{link} and id = #{id}
 	</select>
+
 </mapper>    

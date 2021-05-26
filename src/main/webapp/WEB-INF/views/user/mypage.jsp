@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <!DOCTYPE html>
@@ -78,9 +79,11 @@ $("#user_PWchk").keyup(function() {
 	}
 });
 
+
 $("#user_Email").keyup(function() {
 	
 	if(mailJ.test($("#user_Email").val())&&empJ.test($("#user_Email").val())==false){
+
 		$("#EmailChk").html('');
 		email=true;
 	}else{
@@ -93,6 +96,7 @@ $("#user_Email").keyup(function() {
 $("#user_NickName").keyup(function() {
 	
 	if(nameJ.test($("#user_NickName").val())&&empJ.test($("#user_NickName").val())==false){
+
 		$("#NickNameCheck").html('');
 		nickname=true;
 	}else{
@@ -105,6 +109,7 @@ $("#user_NickName").keyup(function() {
 
 
 $("#signFrm").submit(function(){
+
 	if(pw==false){
 		alert("비밀번호를 확인해주세요");
 		return false;
