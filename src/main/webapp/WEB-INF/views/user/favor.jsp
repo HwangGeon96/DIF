@@ -15,7 +15,7 @@
 				url: "/user/getfavorite",
 				type: "post",
 				data: {"id":id },
-				async: false,
+				async: true,
 				success: function(data) {
 					var list = "";
 						for(var i=0; i<data.length; i++){
