@@ -169,7 +169,6 @@
 							dataType: "json",
 							data: {"query":keyword, "page":page, "radius":"3000", "size":"15", "category_group_code":"FD6", "x":lon, "y":lat, "sort":"distance", lon, lat},
 							success: function(data) {
-								console.log(data);
 								var list = "";
 								
 								list += "<h2>검색결과</h2><ul class='responsive-table'><li class='table-header'>"+	
@@ -183,9 +182,7 @@
 										
 										for(var i=0;i<data.documents.length;i++){
 											
-											var link = data.documents[i].place_url;
-											
-											list += "<li class='table-row'><div class='col col-1' data-label='음식점명'><a href='"+link+"' target='_blank'>"+data.documents[i].place_name+
+											list += "<li class='table-row'><div class='col col-1' data-label='음식점명'><a href='http://place.map.kakao.com/"+data.documents[i].id+"' target='_blank'>"+data.documents[i].place_name+
 											"</a></div><div class='col col-2' data-label='거리'>"+data.documents[i].distance+"m</div><div class='col col-3' data-label='전화번호'>"+
 											data.documents[i].phone+"</div><div class='col col-4' data-label='지도/길찾기/즐겨찾기'><a href='https://map.kakao.com/link/map/"+data.documents[i].id+
 											"' target='_blank'><img src='/resources/icons/location.png'></a>  "+

@@ -54,7 +54,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/idCheck",method = RequestMethod.POST)
 	public String idCheck(String userId) {
-		
+		logger.info("값은:"+userId);
 		String idCheck = service.idCheck(userId);
 		
 		String result = "yes";
