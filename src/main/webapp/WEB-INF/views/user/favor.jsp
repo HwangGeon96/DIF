@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/resources/css/table.css">
 <title>즐겨찾기</title>
 <script type="text/javascript">
-	$(function(){
+	$(function getfavorite(){
 		var id = "${user.user_ID}"
 			$.ajax({
 				url: "/user/getfavorite",
@@ -19,13 +19,33 @@
 				success: function(data) {
 					var list = "";
 						for(var i=0; i<data.length; i++){
-							list += "<tr><td>"+(i+1)+". </td><td><a href='http://place.map.kakao.com/"+data[i].link+"' target='_blank' style>"+data[i].name+"</a></td></tr>";
+							list += "<tr><td>"+(i+1)+". </td><td><a href='http://place.map.kakao.com/"+
+							data[i].link+"' target='_blank' style>"+data[i].name+"</a></td>"+
+							"<td>&nbsp<a href='#'onclick="+'"favorite('+"'"+data[i].name+"'"+",'"+data[i].link+"')"+'">삭제</a></td>'+"</tr>";
 						}
 					document.getElementById("tb").innerHTML = list;
 				}
 			});
 	});
+	
+	function favorite(name, link){
+		var id = "${user.user_ID}"
+		$.ajax({
+			url: "/user/favorite",
+			type: "post",
+			data: {"name":name, "link":link,"id":id },
+			success: function(data) {
+				if(data.result=="y"){
+					window.location.reload();
+					parent.search();
 
+				}else if("n"){
+					alert("즐겨찾기 업데이트 실패! 다시 시도해주세요.");
+				}
+					 
+			}
+		});
+	}
 </script>
 </head>
 <body>

@@ -299,6 +299,7 @@
 					success: function(data) {
 						if(data.result=="y"){
 							$("#"+data.link).attr("src", data.icon);
+							$('#fm').attr('src', '/user/favor');
 						}else if("n"){
 							alert("즐겨찾기 업데이트 실패! 다시 시도해주세요.");
 						}
@@ -329,7 +330,7 @@
 			function initLayerPosition(){
 				document.all.layer.style.visibility="visible";
 				var element_layer = document.getElementById('layer');
-		        var width = 250; 
+		        var width = 300; 
 		        var height = 300; 
 		        var borderWidth = 5; 
 
@@ -375,7 +376,7 @@
 						    <li class="left"><a class="menuLink" href=""  onclick="initLayerPosition();return false;">즐겨찾기</a>	
 						    <div id="layer" style="visibility:hidden;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch; background: white;">
 							<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="showmap();return false;" alt="닫기 버튼">
-							<iframe src="/user/favor" style="width: 250px; height: 300px; border: none;"></iframe>
+							<iframe  id="fm" src="/user/favor" style="width: 300px; height: 300px; border: none;"></iframe>
 							</div></li>
 						</c:if>
 						<li class="right"><a id="postInfo" class="menuLink" href="" onclick="postInfo();return false;"></a></li>	
