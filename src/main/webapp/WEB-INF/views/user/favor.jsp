@@ -21,7 +21,7 @@
 						for(var i=0; i<data.length; i++){
 							list += "<tr><td>"+(i+1)+". </td><td><a href='http://place.map.kakao.com/"+
 							data[i].link+"' target='_blank' style>"+data[i].name+"</a></td>"+
-							"<td>&nbsp<a href='#'onclick="+'"favorite('+"'"+data[i].name+"'"+",'"+data[i].link+"')"+'">삭제</a></td>'+"</tr>";
+							"<td>&emsp;<a href='#'onclick="+'"favorite('+"'"+data[i].name+"'"+",'"+data[i].link+"')"+'">삭제</a></td>'+"</tr>";
 						}
 					document.getElementById("tb").innerHTML = list;
 				}

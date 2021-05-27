@@ -330,8 +330,8 @@
 			function initLayerPosition(){
 				document.all.layer.style.visibility="visible";
 				var element_layer = document.getElementById('layer');
-		        var width = 300; 
-		        var height = 300; 
+		        var width = 350; 
+		        var height = 350; 
 		        var borderWidth = 5; 
 
 		        element_layer.style.width = width + 'px';
@@ -376,7 +376,7 @@
 						    <li class="left"><a class="menuLink" href=""  onclick="initLayerPosition();return false;">즐겨찾기</a>	
 						    <div id="layer" style="visibility:hidden;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch; background: white;">
 							<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="showmap();return false;" alt="닫기 버튼">
-							<iframe  id="fm" src="/user/favor" style="width: 300px; height: 300px; border: none;"></iframe>
+							<iframe  id="fm" src="/user/favor" style="width: 350px; height: 350px; border: none;"></iframe>
 							</div></li>
 						</c:if>
 						<li class="right"><a id="postInfo" class="menuLink" href="" onclick="postInfo();return false;"></a></li>	
